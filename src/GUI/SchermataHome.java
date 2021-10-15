@@ -18,6 +18,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import net.miginfocom.swing.MigLayout;
+import java.awt.Font;
 
 public class SchermataHome extends JFrame {
 
@@ -32,7 +34,7 @@ public class SchermataHome extends JFrame {
 		
 		setTitle("Pagina di Benvenuto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 590, 418);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -40,7 +42,6 @@ public class SchermataHome extends JFrame {
 		
 		JPanel Creazione = new JPanel();
 		contentPane.add(Creazione, BorderLayout.CENTER);
-		Creazione.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnNuovoApparato = new JButton("Nuovo Apparato");
 		btnNuovoApparato.addActionListener(new ActionListener() {
@@ -49,7 +50,13 @@ public class SchermataHome extends JFrame {
 				controller.CreaApparato();
 			}
 		});
-		Creazione.add(btnNuovoApparato);
+		Creazione.setLayout(new MigLayout("", "[113px,center][131px,center][103px,center][center]", "[][23px][23px][23px][][][]"));
+		
+		JLabel lblBnvenuto = new JLabel("Pulsanti di Creazione");
+		lblBnvenuto.setFont(new Font("Tahoma", Font.BOLD, 14));
+		Creazione.add(lblBnvenuto, "cell 0 0");
+		lblBnvenuto.setHorizontalAlignment(SwingConstants.CENTER);
+		Creazione.add(btnNuovoApparato, "cell 0 1,alignx center,aligny top");
 		
 		JButton btnNuovoComponente = new JButton("Nuovo Componente");
 		btnNuovoComponente.addActionListener(new ActionListener() {
@@ -58,7 +65,7 @@ public class SchermataHome extends JFrame {
 				controller.CreaComponente();
 			}
 		});
-		Creazione.add(btnNuovoComponente);
+		Creazione.add(btnNuovoComponente, "cell 1 1,alignx center,aligny top");
 		
 		JButton btnNuovaScheda = new JButton("Nuova Scheda");
 		btnNuovaScheda.addActionListener(new ActionListener() {
@@ -66,7 +73,7 @@ public class SchermataHome extends JFrame {
 				controller.CreaScheda();
 			}
 		});
-		Creazione.add(btnNuovaScheda);
+		Creazione.add(btnNuovaScheda, "cell 2 1,alignx center,aligny top");
 		
 		JButton btnNuovoFornitore = new JButton("Nuovo Fornitore");
 		btnNuovoFornitore.addActionListener(new ActionListener() {
@@ -75,23 +82,6 @@ public class SchermataHome extends JFrame {
 				controller.CreaFornitore();
 			}
 		});
-		Creazione.add(btnNuovoFornitore);
-		
-		JButton btnNuovaCaratteristica = new JButton("Nuova Caratteristica");
-		btnNuovaCaratteristica.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.CreaCaratteristica();
-			}
-		});
-		Creazione.add(btnNuovaCaratteristica);
-		
-		JButton btnNuovaScatola = new JButton("Nuova Scatola");
-		btnNuovaScatola.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.CreaScatola();
-			}
-		});
-		Creazione.add(btnNuovaScatola);
 		
 		JButton btnNuovaTipologia = new JButton("Nuova Tipologia");
 		btnNuovaTipologia.addActionListener(new ActionListener() {
@@ -99,11 +89,36 @@ public class SchermataHome extends JFrame {
 				controller.CreaTipologia();
 			}
 		});
-		Creazione.add(btnNuovaTipologia);
+		Creazione.add(btnNuovaTipologia, "cell 3 1,alignx center,aligny top");
+		Creazione.add(btnNuovoFornitore, "cell 0 2,alignx center,aligny top");
 		
-		JLabel lblBnvenuto = new JLabel("Pagina Home");
-		lblBnvenuto.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblBnvenuto, BorderLayout.NORTH);
+		JButton btnNuovaCaratteristica = new JButton("Nuova Caratteristica");
+		btnNuovaCaratteristica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.CreaCaratteristica();
+			}
+		});
+		Creazione.add(btnNuovaCaratteristica, "cell 1 2,alignx center,aligny top");
+		
+		JButton btnNuovaScatola = new JButton("Nuova Scatola");
+		btnNuovaScatola.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.CreaScatola();
+			}
+		});
+		Creazione.add(btnNuovaScatola, "cell 2 2,alignx center,aligny top");
+		
+		JLabel lblBenvenuto2 = new JLabel("Pulsanti Eliminazioni");
+		lblBenvenuto2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		Creazione.add(lblBenvenuto2, "cell 0 4");
+		
+		JButton btnEliminaComponente = new JButton("Elimina Componente");
+		btnEliminaComponente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.EliminaComponente();
+			}
+		});
+		Creazione.add(btnEliminaComponente, "cell 1 5");
 		
 		JPanel Recuperi = new JPanel();
 		contentPane.add(Recuperi, BorderLayout.SOUTH);

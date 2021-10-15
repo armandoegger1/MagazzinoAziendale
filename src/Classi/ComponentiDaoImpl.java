@@ -6,23 +6,24 @@ import java.util.List;
 
 import DAO.ComponenteDAO;
 
-public class ComponentiDao implements ComponenteDAO {
+import DBConfigurazione.*;
+public class ComponentiDaoImpl implements ComponenteDAO {
 	
-	
-	private Connection connection;
 	
 	private PreparedStatement getTuttiComponentiPS, getComponentiMedianteCodiceFornitorePS, deleteComponentePS, saveComponentePS, getQuantitaTotalePS, getSpecificComponentePS,
 		getQuantitaSpecificaPS;
+
+	private Connection connection = DBConnection.getInstance().getConnection();
 	
-	public ComponentiDao(Connection connection) throws SQLException {
-		this.connection = connection;
-		getTuttiComponentiPS = connection.prepareStatement("SELECT * FROM componenti;");
-		getComponentiMedianteCodiceFornitorePS = connection.prepareStatement("SELECT * FROM componenti WHERE CodiceFornitore LIKE '?';");
-		getQuantitaTotalePS = connection.prepareStatement("SELECT SUM(Quantita) FROM componenti;");
-		getSpecificComponentePS = connection.prepareStatement("SELECT * FROM componenti WHERE IDComponente = ?;");
-		getQuantitaSpecificaPS = connection.prepareStatement("SELECT Quantita FROM componenti WHERE IDComponente  = ?;");
-		saveComponentePS = connection.prepareStatement("INSERT INTO componenti VALUES(?, ?, ?, ?, ? ,? ,? ,?);");
-		deleteComponentePS = connection.prepareStatement("DELETE FROM CUSTOMERS WHERE ID = ?");
+	public ComponentiDaoImpl() throws SQLException {
+//		System.out.println("La connessione ottenuta e': "+connection.toString());
+//		getTuttiComponentiPS = connection.prepareStatement("SELECT * FROM componenti;");
+//		getComponentiMedianteCodiceFornitorePS = connection.prepareStatement("SELECT * FROM componenti WHERE CodiceFornitore LIKE ?;");
+//		getQuantitaTotalePS = connection.prepareStatement("SELECT SUM(Quantita) FROM componenti;");
+//		getSpecificComponentePS = connection.prepareStatement("SELECT * FROM componenti WHERE IDComponente=?;");
+//		getQuantitaSpecificaPS = connection.prepareStatement("SELECT Quantita FROM componenti WHERE IDComponente =?;");
+//		saveComponentePS = connection.prepareStatement("INSERT INTO componenti VALUES(?, ?, ?, ?, ? ,? ,? ,?);");
+		
 	}
 
 	@Override
@@ -60,29 +61,34 @@ public class ComponentiDao implements ComponenteDAO {
 	}
 
 	@Override
-	public int deleteComponente(Componenti componenteDaEliminare)  {
-		return 0;
+	public void deleteComponente(String ID) throws SQLException {
 		
-		// TODO Auto-generated method stub
-
+		deleteComponentePS = connection.prepareStatement("DELETE FROM componenti WHERE IDComponente=?");
+		
+		deleteComponentePS.setString(1, ID);
+		
+		System.out.println(deleteComponentePS.toString());
+		
+		deleteComponentePS.executeUpdate();
+		
+		
 	}
 
 	@Override
-	public int saveComponente(Componenti componenteDaSalvare) throws SQLException {
+	public void saveComponente(Componenti componenteDaSalvare) throws SQLException {
 		
-		/*
+		
 		saveComponentePS.setString(1, componenteDaSalvare.getNomeComponente());
-		saveComponentePS.setString(2, componenteDaSalvare.getCodiceFornitore());
+		saveComponentePS.setString(2, componenteDaSalvare.getCodiceCostruttore());
 		saveComponentePS.setString(3, componenteDaSalvare.getDescrizione());
 		saveComponentePS.setInt(4, componenteDaSalvare.getQuantita());
 		saveComponentePS.setInt(5, componenteDaSalvare.getTipologiaComponente().getIDTipologia());
-		saveComponentePS.setInt(6, componenteDaSalvare.getFornitoreComponente().getIDFornitore());
+		saveComponentePS.setInt(6, componenteDaSalvare.getCaratteristicheComponente().getIDCaratteristica());
 		saveComponentePS.setInt(7, componenteDaSalvare.getFornitoreComponente().getIDFornitore());
-		saveComponentePS.setInt(8, componenteDaSalvare.getFornitoreComponente().getIDFornitore());
+		saveComponentePS.setInt(8, componenteDaSalvare.getScatoloComponente().getIDScatola());
 		
-		saveComponentePS.executeQuery();
-		*/
-		return 0;
+		int row = saveComponentePS.executeUpdate();
+		
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package Classi;
 public class Scatole {
+	private int IDScatola;
 	private String 	NumeroScatola;
 
 	public Scatole(String numeroScatola) {
@@ -14,6 +15,15 @@ public class Scatole {
 	public void setNumeroScatola(String numeroScatola) {
 		NumeroScatola = numeroScatola;
 	}
+
+	public int getIDScatola() {
+		return IDScatola;
+	}
+
+	public void setIDScatola(int iDScatola) {
+		IDScatola = iDScatola;
+	}
+	
 	
 	
 }

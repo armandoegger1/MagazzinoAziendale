@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 public class Main {
     
     //Dichiarazioni dei Frame
+	/*Creazione*/
     SchermataHome frameHome;
     SchermataApparato frameApparato;
     SchermataFornitore frameFornitore;
@@ -18,6 +19,10 @@ public class Main {
     SchermataScheda frameScheda;
     SchermataCaratteristica frameCaratteristica;
     SchermataTipologia frameTipologia;
+    
+    /*Eliminaione*/
+    SchermataEliminaComponente frameEliminaComponente;
+    
  
 
     public static void main(String[] args) {
@@ -29,8 +34,12 @@ public class Main {
     	try {
 			dbConnection = DBConnection.getInstance();
 			connection = dbConnection.getConnection();
+			
+			System.out.println("La connessione ottenuta e': "+connection.toString());
+			
+
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
@@ -38,6 +47,8 @@ public class Main {
     	
     	/*Creazione della prima GUI*/
         Main controller = new Main();
+    	
+
         
         
     }
@@ -93,5 +104,11 @@ public class Main {
     public void Ritorno(JFrame frameCorrente) {
     	frameCorrente.setVisible(false);
     	frameHome.setVisible(true);
+    }
+    
+    public void EliminaComponente() {
+    	frameHome.setVisible(false);
+    	frameEliminaComponente = new SchermataEliminaComponente(this);
+    	frameEliminaComponente.setVisible(true);
     }
 }

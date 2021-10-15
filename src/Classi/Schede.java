@@ -1,5 +1,6 @@
 package Classi;
 public class Schede {
+	private int IDScheda;
 	private String nomeScheda;
 	private Apparati apparatoCollegato;	//Riferimento alla scheda su quale apparato deve essere montato
 	
@@ -22,6 +23,15 @@ public class Schede {
 	public void setApparatoCollegato(Apparati apparatoCollegato) {
 		this.apparatoCollegato = apparatoCollegato;
 	}
+
+	public int getIDScheda() {
+		return IDScheda;
+	}
+
+	public void setIDScheda(int iDScheda) {
+		IDScheda = iDScheda;
+	}
+	
 	
 	
 }

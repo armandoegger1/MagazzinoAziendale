@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Apparati {
 	
 	//Attributi
+	private int IDApparato;
 	private String nomeApparato;
 	private String descrizione;
 	private ArrayList<Schede> schedaInUso;
@@ -39,6 +40,15 @@ public class Apparati {
 	public void setSchedaInUso(ArrayList<Schede> schedaInUso) {
 		this.schedaInUso = schedaInUso;
 	}
+
+	public int getIDApparato() {
+		return IDApparato;
+	}
+
+	public void setIDApparato(int iDApparato) {
+		IDApparato = iDApparato;
+	}
+	
 	
 	
 	

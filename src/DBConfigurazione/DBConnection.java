@@ -10,7 +10,7 @@ public class DBConnection {
 	
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "org.mariadb.jdbc.Driver";
-    static final String DB_URL = "jdbc:mariadb://192.168.1.150/magazzino";
+    static final String DB_URL = "jdbc:mariadb://localhost/magazzino";
     //  Database credentials
     static final String USER = "magazziniere";
     static final String PASS = "password";
@@ -50,14 +50,18 @@ public class DBConnection {
     	//Se la connessione non esiste la creo
         if (instance == null)
         {
+        	System.out.println("Istanza della connessione non presente");
             instance = new DBConnection();
         }
         else
         	//Se la connessione esite ed è chiusa la creo di nuovo
             if (instance.getConnection().isClosed())
             {
+            	System.out.println("Istanza della connessione chiusa, la riapro");
                 instance = new DBConnection();
             }
+        
+        System.out.println("L'istanza e': "+instance.toString());
 
         return instance;
     }

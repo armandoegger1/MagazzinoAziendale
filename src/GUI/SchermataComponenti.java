@@ -7,11 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Classi.Componenti;
+import Classi.ComponentiDaoImpl;
 import Driver.Main;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -19,12 +22,15 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.SpringLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.GridLayout;
+import javax.swing.ListSelectionModel;
 
 public class SchermataComponenti extends JFrame {
 
@@ -107,6 +113,7 @@ public class SchermataComponenti extends JFrame {
 		contentPane.add(label_5, "cell 1 4,grow");
 		
 		JList listCaratteristiche = new JList();
+		listCaratteristiche.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		contentPane.add(listCaratteristiche, "cell 2 4,grow");
 		
 		JLabel lblFornitore = new JLabel("Fornitore");

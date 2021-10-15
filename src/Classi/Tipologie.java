@@ -32,8 +32,5 @@ public class Tipologie {
 	public void setIDTipologia(int iDTipologia) {
 		IDTipologia = iDTipologia;
 	}
-	
-	
-	
 
 }
