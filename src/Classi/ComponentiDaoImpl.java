@@ -16,13 +16,13 @@ public class ComponentiDaoImpl implements ComponenteDAO {
 	private Connection connection = DBConnection.getInstance().getConnection();
 	
 	public ComponentiDaoImpl() throws SQLException {
-//		System.out.println("La connessione ottenuta e': "+connection.toString());
-//		getTuttiComponentiPS = connection.prepareStatement("SELECT * FROM componenti;");
-//		getComponentiMedianteCodiceFornitorePS = connection.prepareStatement("SELECT * FROM componenti WHERE CodiceFornitore LIKE ?;");
-//		getQuantitaTotalePS = connection.prepareStatement("SELECT SUM(Quantita) FROM componenti;");
-//		getSpecificComponentePS = connection.prepareStatement("SELECT * FROM componenti WHERE IDComponente=?;");
-//		getQuantitaSpecificaPS = connection.prepareStatement("SELECT Quantita FROM componenti WHERE IDComponente =?;");
-//		saveComponentePS = connection.prepareStatement("INSERT INTO componenti VALUES(?, ?, ?, ?, ? ,? ,? ,?);");
+		
+		
+		getComponentiMedianteCodiceFornitorePS = connection.prepareStatement("SELECT * FROM componenti WHERE CodiceFornitore LIKE ?;");
+		getQuantitaTotalePS = connection.prepareStatement("SELECT SUM(Quantita) AS QuantitaTotale FROM componenti;");
+		getSpecificComponentePS = connection.prepareStatement("SELECT * FROM componenti WHERE IDComponente=?;");
+		getQuantitaSpecificaPS = connection.prepareStatement("SELECT Quantita FROM componenti WHERE IDComponente =?;");
+		saveComponentePS = connection.prepareStatement("INSERT INTO componenti(CodiceComponente, CodiceFornitore, Descrizione, Quantita, ID_Tipologia, ID_Caratteristica, ID_Fornitore, ID_Scatolo) VALUES(?, ?, ?, ?, ? ,? ,? ,?);");
 		
 	}
 
@@ -31,10 +31,14 @@ public class ComponentiDaoImpl implements ComponenteDAO {
 		
 		List<Componenti> listaComponenti = new ArrayList<Componenti>();
 		
+		getTuttiComponentiPS = connection.prepareStatement("SELECT * FROM componenti;");
+		
 		ResultSet rs = getTuttiComponentiPS.executeQuery();
 		
 		while(rs.next()) {
 			Componenti componenteCorrente = new Componenti(rs.getString("CodiceComponente"), rs.getString("CodiceFornitore"), rs.getString("Descrizione"), rs.getInt("Quantita"));
+			componenteCorrente.setIDComponente(rs.getInt("IDComponente"));
+			
 			listaComponenti.add(componenteCorrente);
 		}
 		rs.close();
@@ -53,7 +57,11 @@ public class ComponentiDaoImpl implements ComponenteDAO {
 		//Fetch del risultato
 		while(rs.next()) {
 			Componenti componenteCorrente = new Componenti(rs.getString("CodiceComponente"), rs.getString("CodiceFornitore"), rs.getString("Descrizione"), rs.getInt("Quantita"));
-			listaComponenti.add(componenteCorrente);	//Salvataggio del risultato in una collections
+			componenteCorrente.setIDComponente(rs.getInt("IDComponente"));
+			/**
+			 * ottenere gli oggetti ID Tipologia, ID Caratteristica, ID Fornitore, ID Scatolo
+			 * componenteCorrente.setTipologiaComponente(oggetto.getID()); (FORSEEE???')**/
+			listaComponenti.add(componenteCorrente);	//Salvataggio del risultato in una collection
 		}
 		rs.close();	//Chiusura connessione
 			
@@ -75,19 +83,27 @@ public class ComponentiDaoImpl implements ComponenteDAO {
 	}
 
 	@Override
-	public void saveComponente(Componenti componenteDaSalvare) throws SQLException {
+	public int saveComponente(Componenti componenteDaSalvare) throws SQLException {
 		
+		int righeAggiunte = 0;
 		
 		saveComponentePS.setString(1, componenteDaSalvare.getNomeComponente());
 		saveComponentePS.setString(2, componenteDaSalvare.getCodiceCostruttore());
 		saveComponentePS.setString(3, componenteDaSalvare.getDescrizione());
 		saveComponentePS.setInt(4, componenteDaSalvare.getQuantita());
-		saveComponentePS.setInt(5, componenteDaSalvare.getTipologiaComponente().getIDTipologia());
-		saveComponentePS.setInt(6, componenteDaSalvare.getCaratteristicheComponente().getIDCaratteristica());
-		saveComponentePS.setInt(7, componenteDaSalvare.getFornitoreComponente().getIDFornitore());
-		saveComponentePS.setInt(8, componenteDaSalvare.getScatoloComponente().getIDScatola());
+		//saveComponentePS.setInt(5, componenteDaSalvare.getTipologiaComponente().getIDTipologia());
+		//saveComponentePS.setInt(6, componenteDaSalvare.getCaratteristicheComponente().getIDCaratteristica());
+		//saveComponentePS.setInt(7, componenteDaSalvare.getFornitoreComponente().getIDFornitore());
+		//saveComponentePS.setInt(8, componenteDaSalvare.getScatoloComponente().getIDScatola());
 		
-		int row = saveComponentePS.executeUpdate();
+		saveComponentePS.setInt(5, 1);
+		saveComponentePS.setInt(6, 1);
+		saveComponentePS.setInt(7, 1);
+		saveComponentePS.setInt(8, 1);
+		
+		righeAggiunte = saveComponentePS.executeUpdate();
+		
+		return righeAggiunte;
 		
 	}
 

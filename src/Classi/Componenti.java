@@ -13,6 +13,12 @@ public class Componenti {
 	private Caratteristiche caratteristicheComponente;
 	private Scatole scatoloComponente;
 	
+	/*Costruttore Vuoto*/
+	public Componenti() {
+		
+	}
+	
+	/*Costruttore Parametrizzato*/
 	public Componenti(String nomeComponente, String codiceCostruttore, String descrizione, int quantita) {
 		super();
 		this.nomeComponente = nomeComponente;

@@ -25,6 +25,7 @@ public class SchermataHome extends JFrame {
 
 	private JPanel contentPane;
 	private Main controller;
+	private JButton btnMostraComponenti;
 
 	/**
 	 * Create the frame.
@@ -50,7 +51,7 @@ public class SchermataHome extends JFrame {
 				controller.CreaApparato();
 			}
 		});
-		Creazione.setLayout(new MigLayout("", "[113px,center][131px,center][103px,center][center]", "[][23px][23px][23px][][][]"));
+		Creazione.setLayout(new MigLayout("", "[113px,center][131px,center][103px,center][center]", "[][23px][23px][23px][][][][][][]"));
 		
 		JLabel lblBnvenuto = new JLabel("Pulsanti di Creazione");
 		lblBnvenuto.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -108,9 +109,18 @@ public class SchermataHome extends JFrame {
 		});
 		Creazione.add(btnNuovaScatola, "cell 2 2,alignx center,aligny top");
 		
-		JLabel lblBenvenuto2 = new JLabel("Pulsanti Eliminazioni");
-		lblBenvenuto2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Creazione.add(lblBenvenuto2, "cell 0 4");
+		JLabel lblPulsantiMostra = new JLabel("Pulsanti Mostra");
+		lblPulsantiMostra.setFont(new Font("Tahoma", Font.BOLD, 14));
+		Creazione.add(lblPulsantiMostra, "cell 0 5");
+		
+		btnMostraComponenti = new JButton("Mostra Componenti");
+		btnMostraComponenti.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				controller.MostraComponenti();
+			}
+		});
+		Creazione.add(btnMostraComponenti, "cell 1 6");
 		
 		JButton btnEliminaComponente = new JButton("Elimina Componente");
 		btnEliminaComponente.addActionListener(new ActionListener() {
@@ -118,7 +128,11 @@ public class SchermataHome extends JFrame {
 				controller.EliminaComponente();
 			}
 		});
-		Creazione.add(btnEliminaComponente, "cell 1 5");
+		
+		JLabel lblBenvenuto3 = new JLabel("Pulsanti Eliminazioni");
+		lblBenvenuto3.setFont(new Font("Tahoma", Font.BOLD, 14));
+		Creazione.add(lblBenvenuto3, "cell 0 8");
+		Creazione.add(btnEliminaComponente, "cell 1 9");
 		
 		JPanel Recuperi = new JPanel();
 		contentPane.add(Recuperi, BorderLayout.SOUTH);

@@ -19,6 +19,7 @@ public class Main {
     SchermataScheda frameScheda;
     SchermataCaratteristica frameCaratteristica;
     SchermataTipologia frameTipologia;
+    SchermataMostraComponenti frameMostraComponenti;
     
     /*Eliminaione*/
     SchermataEliminaComponente frameEliminaComponente;
@@ -110,5 +111,11 @@ public class Main {
     	frameHome.setVisible(false);
     	frameEliminaComponente = new SchermataEliminaComponente(this);
     	frameEliminaComponente.setVisible(true);
+    }
+    
+    public void MostraComponenti() {
+    	frameHome.setVisible(false);
+    	frameMostraComponenti = new SchermataMostraComponenti(this);
+    	frameMostraComponenti.setVisible(true);
     }
 }
