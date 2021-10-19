@@ -8,15 +8,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Classi.FornitoreDaoImpl;
 
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Font;
@@ -26,13 +29,14 @@ public class SchermataHome extends JFrame {
 	private JPanel contentPane;
 	private Main controller;
 	private JButton btnMostraComponenti;
+	private JFrame frameCorrente;
 
 	/**
 	 * Create the frame.
 	 */
 	public SchermataHome(Main controller) {
 		this.controller = controller;
-		
+		frameCorrente = this;
 		setTitle("Pagina di Benvenuto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 590, 418);
@@ -51,7 +55,7 @@ public class SchermataHome extends JFrame {
 				controller.CreaApparato();
 			}
 		});
-		Creazione.setLayout(new MigLayout("", "[113px,center][131px,center][103px,center][center]", "[][23px][23px][23px][][][][][][]"));
+		Creazione.setLayout(new MigLayout("", "[113px,center][121.00px,center][103px,center][center]", "[][23px][23px][23px][][][][][][][]"));
 		
 		JLabel lblBnvenuto = new JLabel("Pulsanti di Creazione");
 		lblBnvenuto.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -129,20 +133,62 @@ public class SchermataHome extends JFrame {
 			}
 		});
 		
-		JLabel lblBenvenuto3 = new JLabel("Pulsanti Eliminazioni");
+		JButton btnMostraFornitori = new JButton("Mostra Fornitori");
+		btnMostraFornitori.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.MostraFornitori();
+			}
+		});
+		Creazione.add(btnMostraFornitori, "cell 0 7");
+		
+		JLabel lblBenvenuto3 = new JLabel("Pulsanti di Eliminazioni");
 		lblBenvenuto3.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Creazione.add(lblBenvenuto3, "cell 0 8");
 		Creazione.add(btnEliminaComponente, "cell 1 9");
 		
+		JButton btnEliminaFornitore = new JButton("Elimina Fornitore");
+		btnEliminaFornitore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.EliminaFornitore();
+			}
+		});
+		Creazione.add(btnEliminaFornitore, "cell 0 10");
+		
 		JPanel Recuperi = new JPanel();
 		contentPane.add(Recuperi, BorderLayout.SOUTH);
-		Recuperi.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		Recuperi.setLayout(new MigLayout("", "[153px,center][145px,center]", "[][23px][]"));
 		
-		JButton btnOttieniComponentiTotali = new JButton("Ottieni Componenti Totali");
-		Recuperi.add(btnOttieniComponentiTotali);
+		JLabel lblRecuperi = new JLabel("Pulsanti di Recupero");
+		lblRecuperi.setFont(new Font("Tahoma", Font.BOLD, 14));
+		Recuperi.add(lblRecuperi, "cell 0 0");
 		
-		JButton btnOttieniScatole = new JButton("Ottieni Scatole Presenti");
-		Recuperi.add(btnOttieniScatole);
+		JButton btnRecuperoQuantitaComponenti = new JButton("Recupero Quantita Componenti");
+		btnRecuperoQuantitaComponenti.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.RecuperoComponentiQuantita();
+			}
+		});
+		Recuperi.add(btnRecuperoQuantitaComponenti, "cell 1 1,alignx left,aligny top");
+		
+		JButton btnRecuperoQuantitaFornitori = new JButton("Recupero Quantita Fornitori");
+		btnRecuperoQuantitaFornitori.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int fornitoriEsistenti;
+				try {
+					FornitoreDaoImpl fDAO = new FornitoreDaoImpl();
+					fornitoriEsistenti = fDAO.getQuantitaTotaleFornitori();
+					JOptionPane.showMessageDialog(frameCorrente, "Sono presenti in totale "+fornitoriEsistenti+" fornitori.","Fornitori Totali!", JOptionPane.INFORMATION_MESSAGE);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				
+			}
+		});
+		Recuperi.add(btnRecuperoQuantitaFornitori, "cell 0 2");
 	}
 
 }

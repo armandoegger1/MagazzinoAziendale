@@ -8,10 +8,12 @@ public class Fornitori {
 	private String telefono;
 	private String email;
 	
-	public Fornitori(String nomeFornitore, String localita) {
+	public Fornitori(String nomeFornitore, String localita, String telefono, String email) {
 		super();
 		this.nomeFornitore = nomeFornitore;
 		this.localita = localita;
+		this.telefono = telefono;
+		this.email = email;
 	}
 
 	public String getNomeFornitore() {

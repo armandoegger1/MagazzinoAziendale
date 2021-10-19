@@ -18,7 +18,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class SchermataCaratteristica extends JFrame {
+public class SchermataCreazioneCaratteristica extends JFrame {
 
 	private JPanel contentPane;
 	private Main controller;
@@ -29,7 +29,7 @@ public class SchermataCaratteristica extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SchermataCaratteristica(Main controller) {
+	public SchermataCreazioneCaratteristica(Main controller) {
 		this.controller = controller;
 		frameCorrente = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

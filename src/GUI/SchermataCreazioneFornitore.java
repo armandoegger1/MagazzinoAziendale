@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Classi.FornitoreDaoImpl;
+import Classi.Fornitori;
 import Driver.Main;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
@@ -16,9 +18,10 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
-public class SchermataFornitore extends JFrame {
+public class SchermataCreazioneFornitore extends JFrame {
 
 	private JPanel contentPane;
 	private JFrame frameCorrente;
@@ -31,7 +34,7 @@ public class SchermataFornitore extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SchermataFornitore(Main controller) {
+	public SchermataCreazioneFornitore(Main controller) {
 		this.controller = controller;
 		frameCorrente = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,7 +98,23 @@ public class SchermataFornitore extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(textFieldNomeFornitore.getText().length() > 0) {
+					
+					String nomeFornitore, localita, telefono, email;
+					nomeFornitore = textFieldNomeFornitore.getText();
+					localita = textFieldLocalita.getText();
+					telefono = textFieldTelefono.getText();
+					email = textFieldEmail.getText();
+					
+					Fornitori fornitore = new Fornitori(nomeFornitore, localita, telefono, email);
+					
+					try {
+						FornitoreDaoImpl fDAO = new FornitoreDaoImpl();
 						
+						fDAO.saveFornitore(fornitore);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 				else {
 					JOptionPane.showMessageDialog(frameCorrente, "Inserisci il nome del fornitore", "Attenzione", JOptionPane.OK_OPTION);

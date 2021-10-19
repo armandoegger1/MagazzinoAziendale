@@ -34,7 +34,7 @@ import java.awt.Insets;
 import java.awt.GridLayout;
 import javax.swing.ListSelectionModel;
 
-public class SchermataComponenti extends JFrame {
+public class SchermataCreazioneComponenti extends JFrame {
 
 	private JPanel contentPane;
 	private Main controller;
@@ -47,7 +47,7 @@ public class SchermataComponenti extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SchermataComponenti(Main controller) {
+	public SchermataCreazioneComponenti(Main controller) {
 		setResizable(false);
 		this.controller = controller;
 		frameCorrente = this;

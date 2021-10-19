@@ -13,16 +13,23 @@ public class Main {
 	/*Creazione*/
     SchermataHome frameHome;
     SchermataApparato frameApparato;
-    SchermataFornitore frameFornitore;
-    SchermataComponenti frameComponente;
+    SchermataCreazioneFornitore frameFornitore;
+    SchermataCreazioneComponenti frameComponente;
     SchermataScatola frameScatola;
     SchermataScheda frameScheda;
-    SchermataCaratteristica frameCaratteristica;
+    SchermataCreazioneCaratteristica frameCaratteristica;
     SchermataTipologia frameTipologia;
+    
+    /*Mostra*/
     SchermataMostraComponenti frameMostraComponenti;
+    SchermataMostraFornitori frameMostraFornitori;
     
     /*Eliminaione*/
     SchermataEliminaComponente frameEliminaComponente;
+    SchermataEliminaFornitore frameEliminaFornitore;
+    
+    /*Recupero degli oggetti*/
+    SchermataRecuperaComponenti frameRecuperoComponenti;
     
  
 
@@ -68,13 +75,13 @@ public class Main {
     
     public void CreaFornitore() {
     	frameHome.setVisible(false);
-    	frameFornitore = new SchermataFornitore(this);
+    	frameFornitore = new SchermataCreazioneFornitore(this);
     	frameFornitore.setVisible(true);
     }
     
     public void CreaComponente() {
     	frameHome.setVisible(false);
-    	frameComponente = new SchermataComponenti(this);
+    	frameComponente = new SchermataCreazioneComponenti(this);
     	frameComponente.setVisible(true);
     }
     
@@ -92,7 +99,7 @@ public class Main {
     
     public void CreaCaratteristica() {
     	frameHome.setVisible(false);
-    	frameCaratteristica = new SchermataCaratteristica(this);
+    	frameCaratteristica = new SchermataCreazioneCaratteristica(this);
     	frameCaratteristica.setVisible(true);
     }
     
@@ -117,5 +124,22 @@ public class Main {
     	frameHome.setVisible(false);
     	frameMostraComponenti = new SchermataMostraComponenti(this);
     	frameMostraComponenti.setVisible(true);
+    }
+    public void RecuperoComponentiQuantita() {
+    	frameHome.setVisible(false);
+    	frameRecuperoComponenti = new SchermataRecuperaComponenti(this);
+    	frameRecuperoComponenti.setVisible(true);
+    }
+    
+    public void EliminaFornitore() {
+    	frameHome.setVisible(false);
+    	frameEliminaFornitore = new SchermataEliminaFornitore(this);
+    	frameEliminaFornitore.setVisible(true);
+    }
+    
+    public void MostraFornitori() {
+    	frameHome.setVisible(false);
+    	frameMostraFornitori = new SchermataMostraFornitori(this);
+    	frameMostraFornitori.setVisible(true);
     }
 }

@@ -17,21 +17,19 @@ public class ComponentiDaoImpl implements ComponenteDAO {
 	
 	public ComponentiDaoImpl() throws SQLException {
 		
-		
-		getComponentiMedianteCodiceFornitorePS = connection.prepareStatement("SELECT * FROM componenti WHERE CodiceFornitore LIKE ?;");
+		getTuttiComponentiPS = connection.prepareStatement("SELECT * FROM componenti;");
+		getComponentiMedianteCodiceFornitorePS = connection.prepareStatement("SELECT * FROM componenti WHERE CodiceFornitore LIKE ?");
 		getQuantitaTotalePS = connection.prepareStatement("SELECT SUM(Quantita) AS QuantitaTotale FROM componenti;");
 		getSpecificComponentePS = connection.prepareStatement("SELECT * FROM componenti WHERE IDComponente=?;");
-		getQuantitaSpecificaPS = connection.prepareStatement("SELECT Quantita FROM componenti WHERE IDComponente =?;");
+		getQuantitaSpecificaPS = connection.prepareStatement("SELECT SUM(Quantita) FROM componenti WHERE CodiceFornitore =?");
 		saveComponentePS = connection.prepareStatement("INSERT INTO componenti(CodiceComponente, CodiceFornitore, Descrizione, Quantita, ID_Tipologia, ID_Caratteristica, ID_Fornitore, ID_Scatolo) VALUES(?, ?, ?, ?, ? ,? ,? ,?);");
-		
+		deleteComponentePS = connection.prepareStatement("DELETE FROM componenti WHERE IDComponente=?");
 	}
 
 	@Override
 	public List<Componenti> getTuttiComponenti() throws SQLException {
 		
 		List<Componenti> listaComponenti = new ArrayList<Componenti>();
-		
-		getTuttiComponentiPS = connection.prepareStatement("SELECT * FROM componenti;");
 		
 		ResultSet rs = getTuttiComponentiPS.executeQuery();
 		
@@ -65,21 +63,21 @@ public class ComponentiDaoImpl implements ComponenteDAO {
 		}
 		rs.close();	//Chiusura connessione
 			
-		return listaComponenti;	//Ritorno la lista dei componenti recuperata dal RDBMS
+		return listaComponenti;	//Ritorno la lista dei componenti recuperata dal DBMS
 	}
 
 	@Override
-	public void deleteComponente(String ID) throws SQLException {
+	public int deleteComponente(String ID) throws SQLException {
 		
-		deleteComponentePS = connection.prepareStatement("DELETE FROM componenti WHERE IDComponente=?");
+		
 		
 		deleteComponentePS.setString(1, ID);
 		
 		System.out.println(deleteComponentePS.toString());
 		
-		deleteComponentePS.executeUpdate();
+		int righeEliminate = deleteComponentePS.executeUpdate();
 		
-		
+		return righeEliminate;
 	}
 
 	@Override
@@ -91,6 +89,7 @@ public class ComponentiDaoImpl implements ComponenteDAO {
 		saveComponentePS.setString(2, componenteDaSalvare.getCodiceCostruttore());
 		saveComponentePS.setString(3, componenteDaSalvare.getDescrizione());
 		saveComponentePS.setInt(4, componenteDaSalvare.getQuantita());
+		//TODO da finire questa parte
 		//saveComponentePS.setInt(5, componenteDaSalvare.getTipologiaComponente().getIDTipologia());
 		//saveComponentePS.setInt(6, componenteDaSalvare.getCaratteristicheComponente().getIDCaratteristica());
 		//saveComponentePS.setInt(7, componenteDaSalvare.getFornitoreComponente().getIDFornitore());
@@ -109,28 +108,40 @@ public class ComponentiDaoImpl implements ComponenteDAO {
 
 	@Override
 	public int getQuantitaTotale() throws SQLException {
-		ResultSet rs = getQuantitaTotalePS.executeQuery();
 		
-		return rs.getInt(0);
+		ResultSet rs = getQuantitaTotalePS.executeQuery();
+		rs.next();	//NON COMMENTARE, E' PRESENTE UN BUG DI RESULT SET CHE NON LEGGE DALLA PRIMA RIGA MA RIMANE FISSO E INIZIALIZZATO A -1
+		int quantitaTotale = rs.getInt(1);
+		
+		rs.close();
+		return quantitaTotale;
+		
 	}
 
 	@Override
-	public int getQuantitaSpecifica(int IDComponente) throws SQLException {
-		getQuantitaSpecificaPS.setInt(1, IDComponente);
+	public int getQuantitaSpecifica(String IDComponente) throws SQLException {
+		
+		getQuantitaSpecificaPS.setString(1, IDComponente);
 		
 		ResultSet rs = getQuantitaSpecificaPS.executeQuery();
-		return rs.getInt(0);
+		rs.next();	//NON COMMENTARE, E' PRESENTE UN BUG DI RESULT SET CHE NON LEGGE DALLA PRIMA RIGA MA RIMANE FISSO E INIZIALIZZATO A -1
+		int quantitaSpecifica = rs.getInt(1);
+		
+		return quantitaSpecifica;
 	}
 
 	@Override
-	public Componenti getSpecificComponente(int IDComponente) throws SQLException {
+	public Componenti getSpecificComponente(String IDComponente) throws SQLException {
 		
-		Componenti c;
-		getSpecificComponentePS.setInt(0, IDComponente);
+		Componenti c;	//Stampo il singolo oggetto
+		getSpecificComponentePS.setString(1, IDComponente);
 		ResultSet rs = getSpecificComponentePS.executeQuery();
+		rs.next();	//NON COMMENTARE, E' PRESENTE UN BUG DI RESULT SET CHE NON LEGGE DALLA PRIMA RIGA MA RIMANE FISSO E INIZIALIZZATO A -1
 		
 		c = new Componenti(rs.getString("CodiceComponente"), rs.getString("CodiceFornitore"), rs.getString("Descrizione"), rs.getInt("Quantita"));
+		c.setIDComponente(rs.getInt("IDComponente"));
 		
+		rs.close();
 		return c;
 	}
 
