@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Classi.CaratteristicheDaoImpl;
 import Classi.FornitoreDaoImpl;
 
 import java.awt.FlowLayout;
@@ -39,7 +40,7 @@ public class SchermataHome extends JFrame {
 		frameCorrente = this;
 		setTitle("Pagina di Benvenuto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 590, 418);
+		setBounds(100, 100, 623, 418);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -55,7 +56,7 @@ public class SchermataHome extends JFrame {
 				controller.CreaApparato();
 			}
 		});
-		Creazione.setLayout(new MigLayout("", "[113px,center][121.00px,center][103px,center][center]", "[][23px][23px][23px][][][][][][][]"));
+		Creazione.setLayout(new MigLayout("", "[113px,center][121.00px,center][103px,center][center]", "[][23px][23px][23px][][][][][][][][][][]"));
 		
 		JLabel lblBnvenuto = new JLabel("Pulsanti di Creazione");
 		lblBnvenuto.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -139,7 +140,23 @@ public class SchermataHome extends JFrame {
 				controller.MostraFornitori();
 			}
 		});
+		
+		JButton btnMostraTipologie = new JButton("Mostra Tipologie");
+		btnMostraTipologie.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.MostraTipologie();
+			}
+		});
+		Creazione.add(btnMostraTipologie, "cell 3 6");
 		Creazione.add(btnMostraFornitori, "cell 0 7");
+		
+		JButton btnMostraCaratteristiche = new JButton("Mostra Caratteristiche");
+		btnMostraCaratteristiche.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.MostraCaratteristiche();
+			}
+		});
+		Creazione.add(btnMostraCaratteristiche, "cell 1 7");
 		
 		JLabel lblBenvenuto3 = new JLabel("Pulsanti di Eliminazioni");
 		lblBenvenuto3.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -152,25 +169,50 @@ public class SchermataHome extends JFrame {
 				controller.EliminaFornitore();
 			}
 		});
-		Creazione.add(btnEliminaFornitore, "cell 0 10");
 		
-		JPanel Recuperi = new JPanel();
-		contentPane.add(Recuperi, BorderLayout.SOUTH);
-		Recuperi.setLayout(new MigLayout("", "[153px,center][145px,center]", "[][23px][]"));
-		
-		JLabel lblRecuperi = new JLabel("Pulsanti di Recupero");
-		lblRecuperi.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Recuperi.add(lblRecuperi, "cell 0 0");
-		
-		JButton btnRecuperoQuantitaComponenti = new JButton("Recupero Quantita Componenti");
-		btnRecuperoQuantitaComponenti.addActionListener(new ActionListener() {
+		JButton btnEliminaTipologia = new JButton("Elimina Tipologia");
+		btnEliminaTipologia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.RecuperoComponentiQuantita();
+				controller.EliminaTipologia();
 			}
 		});
-		Recuperi.add(btnRecuperoQuantitaComponenti, "cell 1 1,alignx left,aligny top");
+		Creazione.add(btnEliminaTipologia, "cell 3 9");
+		Creazione.add(btnEliminaFornitore, "cell 0 10");
+		
+		JButton btnEliminaCaratteristica = new JButton("Elimina Caratteristica");
+		btnEliminaCaratteristica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.EliminaCaratteristica();
+			}
+		});
+		Creazione.add(btnEliminaCaratteristica, "cell 1 10");
+		
+		JLabel lblRecuperi = new JLabel("Pulsanti di Recupero");
+		Creazione.add(lblRecuperi, "cell 0 11");
+		lblRecuperi.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		JButton btnRecuperoQuantitaComponenti = new JButton("Recupero Quantita Componenti");
+		Creazione.add(btnRecuperoQuantitaComponenti, "cell 1 12");
 		
 		JButton btnRecuperoQuantitaFornitori = new JButton("Recupero Quantita Fornitori");
+		Creazione.add(btnRecuperoQuantitaFornitori, "cell 0 13");
+		
+		JButton btnRecuperoQuantitaCaratteristiche = new JButton("Recupero Quantita Caratteristiche");
+		Creazione.add(btnRecuperoQuantitaCaratteristiche, "cell 1 13");
+		btnRecuperoQuantitaCaratteristiche.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int caratteristicheEsistenti;
+				
+				try {
+					CaratteristicheDaoImpl cDAO = new CaratteristicheDaoImpl();
+					caratteristicheEsistenti = cDAO.getQuantitaTotaleCaratteristiche();
+					JOptionPane.showMessageDialog(frameCorrente, "Sono presenti in totale "+caratteristicheEsistenti+" caratteristiche.","Caratteristiche Totali!", JOptionPane.INFORMATION_MESSAGE);
+				}
+				catch(SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnRecuperoQuantitaFornitori.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -188,7 +230,11 @@ public class SchermataHome extends JFrame {
 				
 			}
 		});
-		Recuperi.add(btnRecuperoQuantitaFornitori, "cell 0 2");
+		btnRecuperoQuantitaComponenti.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.RecuperoComponentiQuantita();
+			}
+		});
 	}
 
 }

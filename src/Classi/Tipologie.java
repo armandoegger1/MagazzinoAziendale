@@ -3,10 +3,11 @@ public class Tipologie {
 	
 	private int IDTipologia;
 	private String nomeTipologia;
-	private String descrizione = "";
+	private String descrizione;
 	
 	public Tipologie(String nomeTipologia, String descrizione) {
 		this.nomeTipologia = nomeTipologia;
+		this.descrizione = descrizione;
 	}
 
 	public String getNomeTipologia() {

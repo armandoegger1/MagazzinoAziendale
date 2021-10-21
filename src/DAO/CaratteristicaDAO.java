@@ -8,9 +8,9 @@ import Classi.Caratteristiche;
 public interface CaratteristicaDAO {
 
 	
-	List<Caratteristiche> getTutteCaratteristiche() throws SQLException;	//Ottieni tutti i componenti
-	public int deleteCaratteristica(String NomeFornitore) throws SQLException;	//Elimina un Componente
-	public int saveCaratteristica(Caratteristiche caratteristicaDaSalvare) throws SQLException;		//Salva un componente
-	public int getQuantitaTotaleCaratteristiche() throws SQLException;									//Ottieni la quantita' totale dei componenti del magazzino
-	
+	List<Caratteristiche> getTutteCaratteristiche() throws SQLException;	//Ottieni tutte le caratteristiche
+	public int deleteCaratteristica(int IDCaratteristica) throws SQLException;	//Elimina una Caratteristica
+	public int saveCaratteristica(Caratteristiche caratteristicaDaSalvare) throws SQLException;		//Salva una Caratteristica
+	public int getQuantitaTotaleCaratteristiche() throws SQLException;									//Ottieni la quantita' totale delle caratteristiche
+	public Caratteristiche getCaratteristicaSpecifica(int ID) throws SQLException; //Ottieni una cerca caratteristica
 }

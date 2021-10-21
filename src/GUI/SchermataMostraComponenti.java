@@ -157,7 +157,7 @@ public class SchermataMostraComponenti extends JFrame {
 					catch (NumberFormatException nfe){
 						JOptionPane.showMessageDialog(frameCorrente, "Inserisci un valore numerico", "Attenzione", JOptionPane.OK_OPTION);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
+						
 						e1.printStackTrace();
 					}
 				}

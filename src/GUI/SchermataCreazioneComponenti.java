@@ -177,26 +177,33 @@ public class SchermataCreazioneComponenti extends JFrame {
 					}*/
 					
 					
-					Componenti componenteDaSalvare = new Componenti();
-					int righeAggiunte;
+
 					
 					
-					componenteDaSalvare.setNomeComponente(textFieldNomeComponente.getText());
-					componenteDaSalvare.setCodiceCostruttore(textFieldCodiceCostruttore.getText());
-					componenteDaSalvare.setDescrizione(textFieldDescrizione.getText());
-					quantita = Integer.parseInt(formattedTextFieldQuantita.getText());
-					componenteDaSalvare.setQuantita(quantita);
-					
-					ComponentiDaoImpl cDAO;
 					try {
+						Componenti componenteDaSalvare = new Componenti();
+						int righeAggiunte;
+						ComponentiDaoImpl cDAO;
+						
+						
+						componenteDaSalvare.setNomeComponente(textFieldNomeComponente.getText());
+						componenteDaSalvare.setCodiceCostruttore(textFieldCodiceCostruttore.getText());
+						componenteDaSalvare.setDescrizione(textFieldDescrizione.getText());
+						quantita = Integer.parseInt(formattedTextFieldQuantita.getText());
+						componenteDaSalvare.setQuantita(quantita);
 						cDAO = new ComponentiDaoImpl();
+						
 						righeAggiunte = cDAO.saveComponente(componenteDaSalvare);
 						if(righeAggiunte > 0) {
 							JOptionPane.showMessageDialog(frameCorrente, "Inserimento Completato, aggiunte "+righeAggiunte+" righe.","Inserimento comletato!", JOptionPane.INFORMATION_MESSAGE);
 							
 						}
 					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(frameCorrente, "Assicurarsi di inserire un ID per Tipologia, Caratteristica, Fornitore e Scatola esistente, in caso crearlo","ATTENZIONE", JOptionPane.OK_OPTION);
 						e1.printStackTrace();
+					}
+					catch(NumberFormatException nfe) {
+						JOptionPane.showMessageDialog(frameCorrente, "Inserire un valore numerico per la quantita'","ATTENZIONE", JOptionPane.OK_OPTION);
 					}
 					
 				}

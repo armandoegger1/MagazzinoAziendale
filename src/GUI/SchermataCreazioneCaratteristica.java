@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Classi.Caratteristiche;
+import Classi.CaratteristicheDaoImpl;
 import Driver.Main;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
@@ -16,7 +18,11 @@ import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.Dimension;
 
 public class SchermataCreazioneCaratteristica extends JFrame {
 
@@ -30,6 +36,8 @@ public class SchermataCreazioneCaratteristica extends JFrame {
 	 * Create the frame.
 	 */
 	public SchermataCreazioneCaratteristica(Main controller) {
+		setResizable(false);
+		setTitle("Creazione Caratteristica");
 		this.controller = controller;
 		frameCorrente = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,13 +90,37 @@ public class SchermataCreazioneCaratteristica extends JFrame {
 		JButton btnProsegui = new JButton("Prosegui");
 		btnProsegui.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(textFieldNome.getText().length() > 0 && formattedTextFieldValore.getText().length() > 0) {
+				if(formattedTextFieldValore.getText().length()>0) {
+					int valore;
 					
+					try {
+						valore = Integer.parseInt(formattedTextFieldValore.getText());
+						if(textFieldNome.getText().length() > 0 ) {
+							//TODO da completare
+							CaratteristicheDaoImpl cDAO = new CaratteristicheDaoImpl();
+							Caratteristiche caratteristicheDaAggiungere = new Caratteristiche(textFieldNome.getText(), formattedTextFieldValore.getText(), textFieldDescrizione.getText());
+							int righeAggiunte = cDAO.saveCaratteristica(caratteristicheDaAggiungere);
+							
+							if(righeAggiunte > 0) {
+								JOptionPane.showMessageDialog(frameCorrente, "Inserimento completato!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+							}
+							
+						} else {
+							JOptionPane.showMessageDialog(frameCorrente, "Campi in grassetto vuoti!", "Attenzione", JOptionPane.OK_OPTION);
+						}
+					}
+					catch(NumberFormatException nfe) {
+						JOptionPane.showMessageDialog(frameCorrente, "Valore errato!", "Attenzione", JOptionPane.OK_OPTION);
+						formattedTextFieldValore.setText("");
+						} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 				}
 				else {
-					JOptionPane.showMessageDialog(frameCorrente, "Campi in grassetto vuoti!", "Attenzione", JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(frameCorrente, "Valore mancante!", "Attenzione", JOptionPane.OK_OPTION);
+					
 				}
+
 			}
 		});
 		btnProsegui.setFont(new Font("Tahoma", Font.PLAIN, 14));

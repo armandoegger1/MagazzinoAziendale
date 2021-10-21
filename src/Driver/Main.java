@@ -18,15 +18,19 @@ public class Main {
     SchermataScatola frameScatola;
     SchermataScheda frameScheda;
     SchermataCreazioneCaratteristica frameCaratteristica;
-    SchermataTipologia frameTipologia;
+    SchermataCreazioneTipologia frameTipologia;
     
     /*Mostra*/
     SchermataMostraComponenti frameMostraComponenti;
     SchermataMostraFornitori frameMostraFornitori;
+    SchermataMostraCaratteristiche frameMostraCaratteristiche;
+    SchermataMostraTipologie frameMostraTipologie;
     
     /*Eliminaione*/
     SchermataEliminaComponente frameEliminaComponente;
     SchermataEliminaFornitore frameEliminaFornitore;
+    SchermataEliminaCaratteristica frameEliminaCaratteristica;
+    SchermataEliminaTipologia frameEliminaTipologia;
     
     /*Recupero degli oggetti*/
     SchermataRecuperaComponenti frameRecuperoComponenti;
@@ -105,7 +109,7 @@ public class Main {
     
     public void CreaTipologia() {
     	frameHome.setVisible(false);
-    	frameTipologia = new SchermataTipologia(this);
+    	frameTipologia = new SchermataCreazioneTipologia(this);
     	frameTipologia.setVisible(true);
     }
     
@@ -141,5 +145,30 @@ public class Main {
     	frameHome.setVisible(false);
     	frameMostraFornitori = new SchermataMostraFornitori(this);
     	frameMostraFornitori.setVisible(true);
+    }
+    
+    public void EliminaCaratteristica() {
+    	frameHome.setVisible(false);
+    	frameEliminaCaratteristica = new SchermataEliminaCaratteristica(this);
+    	frameEliminaCaratteristica.setVisible(true);
+    }
+    
+    public void MostraCaratteristiche() {
+    	frameHome.setVisible(false);
+    	frameMostraCaratteristiche = new SchermataMostraCaratteristiche(this);
+    	frameMostraCaratteristiche.setVisible(true);
+    }
+    
+    public void EliminaTipologia() {
+    	frameHome.setVisible(false);
+    	frameEliminaTipologia = new SchermataEliminaTipologia(this);
+    	frameEliminaTipologia.setVisible(true);
+    }
+    
+    public void MostraTipologie() {
+    	
+    	frameHome.setVisible(false);
+    	frameMostraTipologie = new SchermataMostraTipologie(this);
+    	frameMostraTipologie.setVisible(true);
     }
 }

@@ -95,7 +95,7 @@ public class ComponentiDaoImpl implements ComponenteDAO {
 		//saveComponentePS.setInt(7, componenteDaSalvare.getFornitoreComponente().getIDFornitore());
 		//saveComponentePS.setInt(8, componenteDaSalvare.getScatoloComponente().getIDScatola());
 		
-		saveComponentePS.setInt(5, 1);
+		saveComponentePS.setInt(5, 8);
 		saveComponentePS.setInt(6, 1);
 		saveComponentePS.setInt(7, 1);
 		saveComponentePS.setInt(8, 1);

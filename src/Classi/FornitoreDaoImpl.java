@@ -47,7 +47,9 @@ public class FornitoreDaoImpl implements FornitoreDAO {
 		
 		Fornitori fornitoreCorrente;
 		
-		ResultSet rs = getTuttiFornitoriPS.executeQuery();
+		getFornitoriMedianteNomePS.setString(1, nomeFornitore);
+		
+		ResultSet rs = getFornitoriMedianteNomePS.executeQuery();
 		rs.next();
 		
 		fornitoreCorrente = new Fornitori(rs.getString("NomeFornitore"), rs.getString("Localita"), rs.getString("Telefono"), rs.getString("Email"));

@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Classi.TipologiaDaoImpl;
+import Classi.Tipologie;
 import Driver.Main;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
@@ -15,9 +17,10 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
-public class SchermataTipologia extends JFrame {
+public class SchermataCreazioneTipologia extends JFrame {
 
 	private JPanel contentPane;
 	private Main controller;
@@ -28,7 +31,7 @@ public class SchermataTipologia extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SchermataTipologia(Main controller) {
+	public SchermataCreazioneTipologia(Main controller) {
 		this.controller = controller;
 		frameCorrente = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,7 +73,17 @@ public class SchermataTipologia extends JFrame {
 		JButton btnProsegui = new JButton("Prosegui");
 		btnProsegui.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textFieldNomeTipologia.getText().length() > 0) {
+				if(textFieldNomeTipologia.getText().trim().length() > 0) {
+					try {
+						int righeSalvate;
+						TipologiaDaoImpl tDAO = new TipologiaDaoImpl();
+						Tipologie tipologiaDaSalvare = new Tipologie(textFieldNomeTipologia.getText(), textFieldDescrizione.getText());
+						righeSalvate = tDAO.saveTipologia(tipologiaDaSalvare);
+						JOptionPane.showMessageDialog(frameCorrente, "Hai Inserito "+righeSalvate+" righe.", "Inserimento Tipologia", JOptionPane.INFORMATION_MESSAGE);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					
 				}
 				else {
